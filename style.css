@@ -333,7 +333,7 @@ a {
   margin-bottom: 8px;
 }
 
-.get-in-touch {
+.get-in-touch { 
   flex: 1;
 }
 
@@ -413,4 +413,144 @@ textarea:focus {
 
 #subject{
   width: 612px;
+}
+
+.menu-page{
+  max-width:900px;
+  margin:auto;
+  padding:40px 20px;
+}
+
+/* Restaurant Title */
+
+.restaurant-name{
+  font-size:34px;
+  font-weight:700;
+  margin-bottom:30px;
+}
+
+/* Category */
+
+.menu-category{
+  margin-bottom:35px;
+  border-bottom:1px solid #eee;
+  padding-bottom:20px;
+}
+
+.category-title{
+  font-size:22px;
+  font-weight:600;
+  margin-bottom:15px;
+}
+
+/* Menu Card */
+
+.menu-card{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:white;
+  padding:16px 20px;
+  margin-bottom:12px;
+  border-radius:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+  transition:0.2s;
+}
+
+.menu-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 6px 16px rgba(0,0,0,0.12);
+}
+
+/* Menu Info */
+
+.menu-info h3{
+  font-size:17px;
+  margin:0;
+}
+
+.price{
+  color:#ff6b35;
+  font-weight:600;
+  margin-top:5px;
+}
+
+/* Right Section */
+
+.menu-right{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+}
+
+/* Food Image */
+
+.food-img{
+  width:90px;
+  height:80px;
+  object-fit:cover;
+  border-radius:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Add Button */
+
+.add-btn{
+  background:#ff6b35;
+  border:none;
+  color:white;
+  padding:6px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.2s;
+}
+
+.add-btn:hover{
+  background:#e55a24;
+  transform:scale(1.05);
+}
+
+.cart-page{
+max-width:800px;
+margin:auto;
+padding:40px;
+}
+
+.cart-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:white;
+padding:15px;
+margin-bottom:15px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+
+.qty-control{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.qty-control button{
+background:#ff6b35;
+color:white;
+border:none;
+padding:5px 12px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.checkout-btn{
+background:#ff6b35;
+color:white;
+border:none;
+padding:12px 25px;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+margin-top:20px;
 }
