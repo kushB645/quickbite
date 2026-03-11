@@ -44,16 +44,9 @@ const Header = () => {
 
         {/* LOGIN BUTTON */}
 
-        <button
-          className="login-btn"
-          onClick={() => {
-            btnNameReact === "Login"
-              ? setbtnNameReact("Logout")
-              : setbtnNameReact("Login");
-          }}
-        >
-          {btnNameReact}
-        </button>
+        <NavLink to="/login" className="nav-link">
+          Login
+        </NavLink>
       </div>
     </div>
   );
