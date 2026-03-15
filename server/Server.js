@@ -9,11 +9,8 @@ app.use(express.json());
 
 /* CONNECT MONGODB */
 
-mongoose
-  .connect(
-    "mongodb+srv://kushb545_db_user:TmOjzBXJ8P2s4aKj@cluster0.nhehhhm.mongodb.net/?appName=Cluster0",
-  )
-  .then(() => console.log("MongoDB Atlas connected"))
+mongoose.connect("mongodb://127.0.0.1:27017/Foodapp")
+  .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
 /* USER SCHEMA */
