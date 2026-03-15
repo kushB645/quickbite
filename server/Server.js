@@ -9,69 +9,68 @@ app.use(express.json());
 
 /* CONNECT MONGODB */
 
-mongoose.connect("mongodb://127.0.0.1:27017/Foodapp")
-.then(()=>console.log("MongoDB connected"))
-.catch(err=>console.log(err));
+mongoose
+  .connect(
+    "mongodb+srv://kushb545_db_user:TmOjzBXJ8P2s4aKj@cluster0.nhehhhm.mongodb.net/?appName=Cluster0",
+  )
+  .then(() => console.log("MongoDB Atlas connected"))
+  .catch((err) => console.log(err));
 
 /* USER SCHEMA */
 
 const userSchema = new mongoose.Schema({
-  name:String,
-  email:String,
-  password:String
+  name: String,
+  email: String,
+  password: String,
 });
 
-const User = mongoose.model("User",userSchema);
+const User = mongoose.model("User", userSchema);
 
 /* SIGNUP API */
 
-app.post("/signup", async (req,res)=>{
+app.post("/signup", async (req, res) => {
+  const { name, email, password } = req.body;
 
-  const {name,email,password} = req.body;
+  const existingUser = await User.findOne({ email });
 
-  const existingUser = await User.findOne({email});
-
-  if(existingUser){
-    return res.json({message:"User already exists"});
+  if (existingUser) {
+    return res.json({ message: "User already exists" });
   }
 
   const user = new User({
     name,
     email,
-    password
+    password,
   });
 
   await user.save();
 
-  res.json({message:"Signup successful"});
-
+  res.json({ message: "Signup successful" });
 });
 
 /* LOGIN API */
 
-app.post("/login", async (req,res)=>{
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
 
-  const {email,password} = req.body;
+  const user = await User.findOne({ email });
 
-  const user = await User.findOne({email});
-
-  if(!user){
-    return res.json({message:"User not found"});
+  if (!user) {
+    return res.json({ message: "User not found" });
   }
 
-  if(user.password !== password){
-    return res.json({message:"Wrong password"});
+  if (user.password !== password) {
+    return res.json({ message: "Wrong password" });
   }
 
   res.json({
-    message:"Login success",
-    user:user
+    message: "Login success",
+    user: user,
   });
-
 });
 
 /* SERVER */
 
-app.listen(5000,()=>{
+app.listen(5000, () => {
   console.log("Server running on port 5000");
 });
