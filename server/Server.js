@@ -1,4 +1,4 @@
-
+require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -10,11 +10,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(
-"mongodb+srv://kushb545_db_user:TmOjzBXJ8P2s4aKj@cluster0.nhehhhm.mongodb.net/?appName=Cluster0"
-)
-.then(() => console.log("MongoDB connected"))
-.catch((err) => console.log(err));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.log(err));
 
 app.get("/api", (req, res) => {
   res.send("Food API working");
