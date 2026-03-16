@@ -38,6 +38,7 @@ const SignUp = () => {
 
   try{
 
+    setError("");
     setLoading(true);
 
     const res = await fetch("https://foodapp-api.onrender.com/signup", {
@@ -59,8 +60,10 @@ const SignUp = () => {
       return;
     }
 
-    alert("Account created successfully");
-    navigate("/login");
+    if(data.message === "Signup successful"){
+      alert("Account created successfully");
+      navigate("/login");
+    }
 
   }catch(err){
 

@@ -1,22 +1,24 @@
-require("dotenv").config({ path: "./server/.env" });
+
 
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-/* CONNECT MONGODB */
+mongoose.connect(
+"mongodb+srv://kushb545_db_user:TmOjzBXJ8P2s4aKj@cluster0.nhehhhm.mongodb.net/?appName=Cluster0"
+)
+.then(() => console.log("MongoDB connected"))
+.catch((err) => console.log(err));
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log(err));
-
-/* USER SCHEMA */
+app.get("/api", (req, res) => {
+  res.send("Food API working");
+});
 
 const userSchema = new mongoose.Schema({
   name: String,
@@ -25,8 +27,6 @@ const userSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model("User", userSchema);
-
-/* SIGNUP API */
 
 app.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
@@ -44,8 +44,6 @@ app.post("/signup", async (req, res) => {
   res.json({ message: "Signup successful" });
 });
 
-/* LOGIN API */
-
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -61,11 +59,15 @@ app.post("/login", async (req, res) => {
 
   res.json({
     message: "Login success",
-    user: user,
+    user,
   });
 });
 
-/* SERVER */
+app.use(express.static(path.join(__dirname, "../dist")));
+
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, "../dist/index.html"));
+});
 
 const PORT = process.env.PORT || 5000;
 
