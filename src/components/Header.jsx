@@ -10,8 +10,10 @@ const Header = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
   }, []);
 
   const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
@@ -23,13 +25,14 @@ const Header = () => {
   };
 
   /* Get initials */
-  const initials = user?.name
-    ? user.name
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .toUpperCase()
-    : user?.email?.[0]?.toUpperCase();
+  const initials =
+    user?.name
+      ?.split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase() ||
+    user?.email?.[0]?.toUpperCase() ||
+    "";
 
   return (
     <div className="header">
@@ -57,9 +60,7 @@ const Header = () => {
         {/* CART */}
         <Link className="cart-icon" to="/cart">
           🛒
-          {totalItems > 0 && (
-            <span className="cart-count">{totalItems}</span>
-          )}
+          {totalItems > 0 && <span className="cart-count">{totalItems}</span>}
         </Link>
 
         {/* PROFILE / LOGIN */}

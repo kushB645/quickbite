@@ -11,51 +11,50 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (!email || !password) {
-    setError("Please fill all fields");
-    return;
-  }
-
-  if (!emailRegex.test(email)) {
-    setError("Enter a valid email address");
-    return;
-  }
-
-  try {
-    setError("");
-    setLoading(true);
-
-    const res = await fetch("https://order-de0s.onrender.com/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
-
-    const data = await res.json();
-
-    if (data.message !== "Login success") {
-      setError(data.message);
+    if (!email || !password) {
+      setError("Please fill all fields");
       return;
     }
 
-    // save user in local storage
-    localStorage.setItem("user", JSON.stringify(data.user));
+    if (!emailRegex.test(email)) {
+      setError("Enter a valid email address");
+      return;
+    }
 
-    // redirect to home page
-    navigate("/");
-  } catch (err) {
-    setError("Server error. Try again later.");
-  } finally {
-    setLoading(false);
-  }
-};
+    try {
+      setError("");
+      setLoading(true);
+
+      const res = await fetch("https://order-de0s.onrender.com/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.message !== "Login success") {
+        setError(data.message);
+        return;
+      }
+
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      navigate("/");
+      window.location.reload();
+    } catch (err) {
+      setError("Server error. Try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleGoogleLogin = () => {
     window.open("https://accounts.google.com/signin", "_blank");
