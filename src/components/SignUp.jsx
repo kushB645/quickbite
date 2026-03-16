@@ -14,68 +14,64 @@ const SignUp = () => {
 
   const handleSignup = async () => {
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    // strong password
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
 
-    if(!name || !email || !password){
-      setError("Please fill all fields");
+  if(!name || !email || !password){
+    setError("Please fill all fields");
+    return;
+  }
+
+  if(!emailRegex.test(email)){
+    setError("Enter a valid email address");
+    return;
+  }
+
+  if(!passwordRegex.test(password)){
+    setError(
+      "Password must contain 8+ characters, uppercase, lowercase, number and special symbol"
+    );
+    return;
+  }
+
+  try{
+
+    setLoading(true);
+
+    const res = await fetch("https://foodapp-api.onrender.com/signup", {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        name,
+        email,
+        password
+      })
+    });
+
+    const data = await res.json();
+
+    if(data.message === "User already exists"){
+      setError("User already exists");
       return;
     }
 
-    if(!emailRegex.test(email)){
-      setError("Enter a valid email address");
-      return;
-    }
+    alert("Account created successfully");
+    navigate("/login");
 
-    if(!passwordRegex.test(password)){
-      setError(
-        "Password must contain 8+ characters, uppercase, lowercase, number and special symbol"
-      );
-      return;
-    }
+  }catch(err){
 
-    try{
+    setError("Server error. Try again later.");
 
-      setLoading(true);
+  }finally{
 
-      const res = await fetch("http://localhost:5000/signup",{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-          name,
-          email,
-          password
-        })
-      });
+    setLoading(false);
 
-      const data = await res.json();
-
-      if(data.message === "User already exists"){
-        setError("User already exists");
-        setLoading(false);
-        return;
-      }
-
-      alert("Account created successfully");
-
-      navigate("/login");
-
-    }catch(err){
-
-      setError("Server error. Try again later.");
-
-    }finally{
-
-      setLoading(false);
-
-    }
-
-  };
+  }
+};
 
   return (
     <div className="login-page">

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "creating a react food ordering app",
   "scripts": {
-    "start": "parcel index.html",
+    "start": "npx serve dist",
     "build": "parcel build index.html",
     "test": "jest"
   },
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/kushB645/ORDER#readme",
   "dependencies": {
     "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "mongodb": "^7.1.0",
     "mongoose": "^9.3.0",
