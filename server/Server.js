@@ -24,28 +24,27 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User",userSchema);
 
-/* SIGNUP API */
+/* SIGNUP API  ← ADD IT HERE */
 
 app.post("/signup", async (req,res)=>{
+  try{
+    const {name,email,password} = req.body;
 
-  const {name,email,password} = req.body;
+    const existingUser = await User.findOne({email});
 
-  const existingUser = await User.findOne({email});
+    if(existingUser){
+      return res.json({message:"User already exists"});
+    }
 
-  if(existingUser){
-    return res.json({message:"User already exists"});
+    const user = new User({name,email,password});
+
+    await user.save();
+
+    res.json({message:"Signup successful"});
+
+  }catch(err){
+    res.status(500).json({message:"Server error"});
   }
-
-  const user = new User({
-    name,
-    email,
-    password
-  });
-
-  await user.save();
-
-  res.json({message:"Signup successful"});
-
 });
 
 /* LOGIN API */

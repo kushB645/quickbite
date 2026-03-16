@@ -13,66 +13,64 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const handleSignup = async () => {
-
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
 
-  if(!name || !email || !password){
+  if (!name || !email || !password) {
     setError("Please fill all fields");
     return;
   }
 
-  if(!emailRegex.test(email)){
+  if (!emailRegex.test(email)) {
     setError("Enter a valid email address");
     return;
   }
 
-  if(!passwordRegex.test(password)){
+  if (!passwordRegex.test(password)) {
     setError(
       "Password must contain 8+ characters, uppercase, lowercase, number and special symbol"
     );
     return;
   }
 
-  try{
-
+  try {
     setError("");
     setLoading(true);
 
-    const res = await fetch("http://localhost:5000/signup", {
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
+    const res = await fetch("https://order-de0s.onrender.com/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-      body:JSON.stringify({
+      body: JSON.stringify({
         name,
         email,
-        password
-      })
+        password,
+      }),
     });
 
     const data = await res.json();
 
-    if(data.message === "User already exists"){
+    if (!res.ok) {
+      setError(data.message || "Signup failed");
+      return;
+    }
+
+    if (data.message === "User already exists") {
       setError("User already exists");
       return;
     }
 
-    if(data.message === "Signup successful"){
+    if (data.message === "Signup successful") {
       alert("Account created successfully");
       navigate("/login");
     }
-
-  }catch(err){
-
+  } catch (err) {
     setError("Server error. Try again later.");
-
-  }finally{
-
+  } finally {
     setLoading(false);
-
   }
 };
 
