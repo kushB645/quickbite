@@ -1,71 +1,77 @@
 require("dotenv").config();
-
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const path = require("path");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.log(err));
+/* CONNECT MONGODB */
 
-app.get("/api", (req, res) => {
-  res.send("Food API working");
-});
+mongoose.connect(process.env.MONGO_URI)
+  .then(()=>console.log("MongoDB connected"))
+  .catch(err=>console.log(err));
+
+/* USER SCHEMA */
 
 const userSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  password: String,
+  name:String,
+  email:String,
+  password:String
 });
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("User",userSchema);
 
-app.post("/signup", async (req, res) => {
-  const { name, email, password } = req.body;
+/* SIGNUP API */
 
-  const existingUser = await User.findOne({ email });
+app.post("/signup", async (req,res)=>{
 
-  if (existingUser) {
-    return res.json({ message: "User already exists" });
+  const {name,email,password} = req.body;
+
+  const existingUser = await User.findOne({email});
+
+  if(existingUser){
+    return res.json({message:"User already exists"});
   }
 
-  const user = new User({ name, email, password });
+  const user = new User({
+    name,
+    email,
+    password
+  });
 
   await user.save();
 
-  res.json({ message: "Signup successful" });
+  res.json({message:"Signup successful"});
+
 });
 
-app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+/* LOGIN API */
 
-  const user = await User.findOne({ email });
+app.post("/login", async (req,res)=>{
 
-  if (!user) {
-    return res.json({ message: "User not found" });
+  const {email,password} = req.body;
+
+  const user = await User.findOne({email});
+
+  if(!user){
+    return res.json({message:"User not found"});
   }
 
-  if (user.password !== password) {
-    return res.json({ message: "Wrong password" });
+  if(user.password !== password){
+    return res.json({message:"Wrong password"});
   }
 
   res.json({
-    message: "Login success",
-    user,
+    message:"Login success",
+    user:user
   });
+
 });
 
-app.use(express.static(path.join(__dirname, "../dist")));
-
-app.use((req, res) => {
-  res.sendFile(path.join(__dirname, "../dist/index.html"));
-});
+/* SERVER */
 
 const PORT = process.env.PORT || 5000;
 
