@@ -43,6 +43,7 @@ app.post("/signup", async (req,res)=>{
     res.json({message:"Signup successful"});
 
   }catch(err){
+    console.error("Signup error:", err); 
     res.status(500).json({message:"Server error"});
   }
 });
