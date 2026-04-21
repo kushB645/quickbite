@@ -48,7 +48,7 @@ A modern **full-stack food ordering web application** built using **React.js, Ex
 
 quickbite/
 │── server/
-│   └── Server.js  
+│   └── Server.js          # Express backend
 │
 │── src/
 │   ├── components/
