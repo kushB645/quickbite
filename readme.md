@@ -46,7 +46,8 @@ A modern **full-stack food ordering web application** built using **React.js, Ex
 
 ## 📂 Project Structure  
 
-![alt text](image.png)
+<img width="607" height="591" alt="image" src="https://github.com/user-attachments/assets/2983b179-0177-44cb-8b89-6bc0ef85c57a" />
+
 
 ---
 
