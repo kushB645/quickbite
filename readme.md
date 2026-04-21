@@ -46,30 +46,7 @@ A modern **full-stack food ordering web application** built using **React.js, Ex
 
 ## 📂 Project Structure  
 
-quickbite/
-│── server/
-│   └── Server.js          # Express backend
-│
-│── src/
-│   ├── components/
-│   │   ├── Header.jsx
-│   │   ├── Body.jsx
-│   │   ├── RestaurantCard.jsx
-│   │   ├── RestaurantMenu.jsx
-│   │   ├── Cart.jsx
-│   │   ├── CartContext.jsx
-│   │   ├── About.jsx
-│   │   ├── Contact.jsx
-│   │   ├── SignUp.jsx
-│   │   ├── Footer.jsx
-│   │   ├── Error.jsx
-│   │
-│   ├── utils/
-│   ├── main.js
-│
-│── index.html
-│── package.json
-│── .env
+![alt text](image.png)
 
 ---
 
